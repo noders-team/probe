@@ -6,9 +6,14 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/codec/types"
+	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
+	"github.com/cosmos/cosmos-sdk/crypto/keys/multisig"
+	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
+	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	"github.com/cosmos/cosmos-sdk/std"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/auth/tx"
+	"github.com/evmos/ethermint/crypto/ethsecp256k1"
 	osmosisGammTypes "github.com/nodersteam/probe/client/codec/osmosis/v15/x/gamm/types"
 	osmosisLockupTypes "github.com/nodersteam/probe/client/codec/osmosis/v15/x/lockup/types"
 	osmosisPoolManagerTypes "github.com/nodersteam/probe/client/codec/osmosis/v15/x/poolmanager/types"
@@ -51,6 +56,12 @@ func RegisterTendermintLiquidityInterfaces(aminoCodec *codec.LegacyAmino, regist
 
 func MakeCodecConfig() Codec {
 	interfaceRegistry := types.NewInterfaceRegistry()
+	interfaceRegistry.RegisterInterface("cosmos.crypto.Pubkey", (*cryptotypes.PubKey)(nil))
+	interfaceRegistry.RegisterImplementations((*cryptotypes.PubKey)(nil), &ed25519.PubKey{})
+	interfaceRegistry.RegisterImplementations((*cryptotypes.PubKey)(nil), &secp256k1.PubKey{})
+	interfaceRegistry.RegisterImplementations((*cryptotypes.PubKey)(nil), &multisig.LegacyAminoPubKey{})
+	interfaceRegistry.RegisterImplementations((*cryptotypes.PubKey)(nil), &ethsecp256k1.PubKey{})
+
 	marshaler := codec.NewProtoCodec(interfaceRegistry)
 	return Codec{
 		InterfaceRegistry: interfaceRegistry,
