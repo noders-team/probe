@@ -13,6 +13,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/std"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/auth/tx"
+	transfertypes "github.com/cosmos/ibc-go/v7/modules/apps/transfer/types"
+	clientTypes "github.com/cosmos/ibc-go/v7/modules/core/02-client/types"
+	coretypes "github.com/cosmos/ibc-go/v7/modules/core/04-channel/types"
 	"github.com/evmos/ethermint/crypto/ethsecp256k1"
 	osmosisGammTypes "github.com/nodersteam/probe/client/codec/osmosis/v15/x/gamm/types"
 	osmosisLockupTypes "github.com/nodersteam/probe/client/codec/osmosis/v15/x/lockup/types"
@@ -34,6 +37,9 @@ func MakeCodec(moduleBasics []module.AppModuleBasic) Codec {
 	std.RegisterInterfaces(encodingConfig.InterfaceRegistry)
 	modBasic.RegisterLegacyAminoCodec(encodingConfig.Amino)
 	modBasic.RegisterInterfaces(encodingConfig.InterfaceRegistry)
+	coretypes.RegisterInterfaces(encodingConfig.InterfaceRegistry)
+	transfertypes.RegisterInterfaces(encodingConfig.InterfaceRegistry)
+	clientTypes.RegisterInterfaces(encodingConfig.InterfaceRegistry)
 
 	return encodingConfig
 }
@@ -61,6 +67,9 @@ func MakeCodecConfig() Codec {
 	interfaceRegistry.RegisterImplementations((*cryptotypes.PubKey)(nil), &secp256k1.PubKey{})
 	interfaceRegistry.RegisterImplementations((*cryptotypes.PubKey)(nil), &multisig.LegacyAminoPubKey{})
 	interfaceRegistry.RegisterImplementations((*cryptotypes.PubKey)(nil), &ethsecp256k1.PubKey{})
+	coretypes.RegisterInterfaces(interfaceRegistry)
+	transfertypes.RegisterInterfaces(interfaceRegistry)
+	clientTypes.RegisterInterfaces(interfaceRegistry)
 
 	marshaler := codec.NewProtoCodec(interfaceRegistry)
 	return Codec{
