@@ -2,3 +2,4 @@
 probe
 vendor
 .idea
+proto/gogoproto

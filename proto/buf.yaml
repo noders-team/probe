@@ -1,5 +1,9 @@
 # This module represents buf.build/cosmos/cosmos-sdk
-version: v1
+version: v1beta1
+
 name: buf.build/cosmos/cosmos-sdk
 deps:
+  - buf.build/googleapis/googleapis
   - buf.build/cosmos/gogo-proto
+  - buf.build/cosmos/cosmos-proto
+  - buf.build/beta/googleapis
