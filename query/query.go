@@ -38,9 +38,9 @@ func (q *Query) Block() (*coretypes.ResultBlock, error) {
 	return BlockRPC(q)
 }
 
-// Tx returns the Tx and all contained messages/TxResponse.
-func (q *Query) TxByHeight(cc client.Codec) (*txTypes.GetTxsEventResponse, error) {
-	return TxsAtHeightRPC(q, q.Options.Height, cc)
+// TxByHeight returns the Tx and all contained messages/TxResponse.
+func (q *Query) TxByHeight(cc client.Codec, page, limit uint64) (*txTypes.GetTxsEventResponse, error) {
+	return TxsAtHeightRPC(q, q.Options.Height, cc, page, limit)
 }
 
 // Status returns information about a node status
