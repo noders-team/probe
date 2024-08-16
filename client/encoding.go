@@ -17,6 +17,7 @@ import (
 	clientTypes "github.com/cosmos/ibc-go/v7/modules/core/02-client/types"
 	coretypes "github.com/cosmos/ibc-go/v7/modules/core/04-channel/types"
 	"github.com/evmos/ethermint/crypto/ethsecp256k1"
+	celTypes "github.com/nodersteam/probe/client/codec/celestiaorg/celestia-app/x/blob/types"
 	osmosisGammTypes "github.com/nodersteam/probe/client/codec/osmosis/v15/x/gamm/types"
 	osmosisLockupTypes "github.com/nodersteam/probe/client/codec/osmosis/v15/x/lockup/types"
 	osmosisPoolManagerTypes "github.com/nodersteam/probe/client/codec/osmosis/v15/x/poolmanager/types"
@@ -70,6 +71,7 @@ func MakeCodecConfig() Codec {
 	coretypes.RegisterInterfaces(interfaceRegistry)
 	transfertypes.RegisterInterfaces(interfaceRegistry)
 	clientTypes.RegisterInterfaces(interfaceRegistry)
+	celTypes.RegisterInterfaces(interfaceRegistry)
 
 	marshaler := codec.NewProtoCodec(interfaceRegistry)
 	return Codec{
