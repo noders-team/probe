@@ -310,7 +310,7 @@ type MsgSwapWithinBatch struct {
 	// limit order price for the order, the price is the exchange ratio of X/Y
 	// where X is the amount of the first coin and Y is the amount
 	// of the second coin when their denoms are sorted alphabetically.
-	OrderPrice github_com_cosmos_cosmos_sdk_types.Dec `protobuf:"bytes,7,opt,name=order_price,json=orderPrice,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"order_price" yaml:"order_price"`
+	OrderPrice github_com_cosmos_cosmos_sdk_types.DecCoin `protobuf:"bytes,7,opt,name=order_price,json=orderPrice,proto3,customtype=github.com/cosmos/cosmos-sdk/types.Dec" json:"order_price" yaml:"order_price"`
 }
 
 func (m *MsgSwapWithinBatch) Reset()         { *m = MsgSwapWithinBatch{} }
