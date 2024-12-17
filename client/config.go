@@ -3,20 +3,19 @@
 package client
 
 import (
+	feegrant "cosmossdk.io/x/feegrant/module"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/auth"
 	"github.com/cosmos/cosmos-sdk/x/auth/vesting"
 	authz "github.com/cosmos/cosmos-sdk/x/authz/module"
 	"github.com/cosmos/cosmos-sdk/x/bank"
-	"github.com/cosmos/cosmos-sdk/x/capability"
 	"github.com/cosmos/cosmos-sdk/x/crisis"
 	"github.com/cosmos/cosmos-sdk/x/distribution"
-	feegrant "github.com/cosmos/cosmos-sdk/x/feegrant/module"
-	"github.com/cosmos/cosmos-sdk/x/gov"
 	"github.com/cosmos/cosmos-sdk/x/mint"
 	"github.com/cosmos/cosmos-sdk/x/params"
 	"github.com/cosmos/cosmos-sdk/x/slashing"
 	"github.com/cosmos/cosmos-sdk/x/staking"
+	"github.com/cosmos/ibc-go/modules/capability"
 )
 
 var (
@@ -26,8 +25,8 @@ var (
 		auth.AppModuleBasic{},
 		authz.AppModuleBasic{},
 		bank.AppModuleBasic{},
+		//gov.AppModuleBasic{},
 		capability.AppModuleBasic{},
-		gov.AppModuleBasic{},
 		crisis.AppModuleBasic{},
 		distribution.AppModuleBasic{},
 		feegrant.AppModuleBasic{},

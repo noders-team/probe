@@ -7,10 +7,7 @@ import (
 	cosmosTypes "github.com/cosmos/cosmos-sdk/types"
 	cquery "github.com/cosmos/cosmos-sdk/types/query"
 	"github.com/nodersteam/probe/client"
-	gammTypes "github.com/nodersteam/probe/client/codec/osmosis/v15/x/gamm/types"
-	poolmanagerTypes "github.com/nodersteam/probe/client/codec/osmosis/v15/x/poolmanager/types"
 	querier "github.com/nodersteam/probe/query"
-	osmosisQueryTypes "github.com/nodersteam/probe/query/osmosis"
 )
 
 func main() {
@@ -79,7 +76,7 @@ func main() {
 	options = querier.QueryOptions{Height: checkHeight, Pagination: &pg}
 	query = querier.Query{Client: cl, Options: &options}
 
-	txResponse, err := querier.TxsAtHeightRPC(&query, checkHeight, cl.Codec)
+	txResponse, err := querier.TxsAtHeightRPC(&query, checkHeight, cl.Codec, 0, 100)
 
 	if err != nil {
 		fmt.Println("Error getting transactions")
@@ -110,52 +107,6 @@ func main() {
 			}
 		}
 	}
-
-	// Osmosis specific querying proof of concepts
-
-	// Get the latest Epoch data
-
-	if cconfig.ChainID == "osmosis-1" {
-		epochData, err := osmosisQueryTypes.EpochsAtHeightRPC(&query, checkHeight)
-
-		if err != nil {
-			fmt.Println("Error getting epoch results")
-			fmt.Println(err)
-			os.Exit(1)
-		}
-
-		fmt.Println("Got epoch results, some data follows:")
-		for _, epoch := range epochData.Epochs {
-			fmt.Printf("Epoch Identifier: %+v\n", epoch.Identifier)
-			fmt.Printf("Epoch Current Start Height: %+v\n", epoch.CurrentEpochStartHeight)
-			fmt.Printf("Epoch Duration: %+v\n", epoch.Duration)
-		}
-
-		protorevDevAccountData, err := osmosisQueryTypes.ProtorevDeveloperAccountRPC(&query)
-
-		if err != nil {
-			fmt.Println("Error getting protorev results")
-			fmt.Println(err)
-			os.Exit(1)
-		}
-
-		fmt.Println("Got protorev results, some data follows:")
-		fmt.Println("Protorev Developer Account Address: ", protorevDevAccountData.DeveloperAccount)
-
-	}
-
 }
 
-var handlers = map[string]func(cosmosTypes.Msg){
-	"/osmosis.gamm.v1beta1.MsgSwapExactAmountOut": func(currMsg cosmosTypes.Msg) {
-		swapExactAmountOut := currMsg.(*gammTypes.MsgSwapExactAmountOut)
-		fmt.Printf("%s swapped %s\n", swapExactAmountOut.Sender, swapExactAmountOut.TokenOut)
-	},
-	"/osmosis.poolmanager.v1beta1.MsgSwapExactAmountIn": func(currMsg cosmosTypes.Msg) {
-		swapExactAmountIn := currMsg.(*poolmanagerTypes.MsgSwapExactAmountIn)
-		fmt.Printf("%s swapped %s along these routes:\n", swapExactAmountIn.Sender, swapExactAmountIn.TokenIn)
-		for _, route := range swapExactAmountIn.Routes {
-			fmt.Printf("Pool %d\n", route.PoolId)
-		}
-	},
-}
+var handlers = map[string]func(cosmosTypes.Msg){}

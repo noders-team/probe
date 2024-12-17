@@ -13,14 +13,10 @@ import (
 	"github.com/cosmos/cosmos-sdk/std"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/auth/tx"
-	transfertypes "github.com/cosmos/ibc-go/v7/modules/apps/transfer/types"
-	clientTypes "github.com/cosmos/ibc-go/v7/modules/core/02-client/types"
-	coretypes "github.com/cosmos/ibc-go/v7/modules/core/04-channel/types"
-	"github.com/evmos/ethermint/crypto/ethsecp256k1"
+	transfertypes "github.com/cosmos/ibc-go/v8/modules/apps/transfer/types"
+	clientTypes "github.com/cosmos/ibc-go/v8/modules/core/02-client/types"
+	coretypes "github.com/cosmos/ibc-go/v8/modules/core/04-channel/types"
 	celTypes "github.com/nodersteam/probe/client/codec/celestiaorg/celestia-app/x/blob/types"
-	osmosisGammTypes "github.com/nodersteam/probe/client/codec/osmosis/v15/x/gamm/types"
-	osmosisLockupTypes "github.com/nodersteam/probe/client/codec/osmosis/v15/x/lockup/types"
-	osmosisPoolManagerTypes "github.com/nodersteam/probe/client/codec/osmosis/v15/x/poolmanager/types"
 	tendermintLiquidityTypes "github.com/nodersteam/probe/client/codec/tendermint/liquidity/x/liquidity/types"
 )
 
@@ -47,15 +43,6 @@ func MakeCodec(moduleBasics []module.AppModuleBasic) Codec {
 
 // Split out from base codec to not include explicitly.
 // Should be included only when needed.
-func RegisterOsmosisInterfaces(registry types.InterfaceRegistry) {
-	// Needs to be extended in order to cover all the modules
-	osmosisGammTypes.RegisterInterfaces(registry)
-	osmosisPoolManagerTypes.RegisterInterfaces(registry)
-	osmosisLockupTypes.RegisterInterfaces(registry)
-}
-
-// Split out from base codec to not include explicitly.
-// Should be included only when needed.
 func RegisterTendermintLiquidityInterfaces(aminoCodec *codec.LegacyAmino, registry types.InterfaceRegistry) {
 	tendermintLiquidityTypes.RegisterLegacyAminoCodec(aminoCodec)
 	tendermintLiquidityTypes.RegisterInterfaces(registry)
@@ -67,7 +54,7 @@ func MakeCodecConfig() Codec {
 	interfaceRegistry.RegisterImplementations((*cryptotypes.PubKey)(nil), &ed25519.PubKey{})
 	interfaceRegistry.RegisterImplementations((*cryptotypes.PubKey)(nil), &secp256k1.PubKey{})
 	interfaceRegistry.RegisterImplementations((*cryptotypes.PubKey)(nil), &multisig.LegacyAminoPubKey{})
-	interfaceRegistry.RegisterImplementations((*cryptotypes.PubKey)(nil), &ethsecp256k1.PubKey{})
+	//interfaceRegistry.RegisterImplementations((*cryptotypes.PubKey)(nil), &ethsecp256k1.PubKey{})
 	coretypes.RegisterInterfaces(interfaceRegistry)
 	transfertypes.RegisterInterfaces(interfaceRegistry)
 	clientTypes.RegisterInterfaces(interfaceRegistry)

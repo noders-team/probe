@@ -5,6 +5,7 @@ package client
 import (
 	"context"
 	"fmt"
+	"github.com/pkg/errors"
 	"reflect"
 	"strconv"
 	"strings"
@@ -33,7 +34,7 @@ func (cc *ChainClient) Invoke(ctx context.Context, method string, req, reply int
 
 	// In both cases, we don't allow empty request req (it will panic unexpectedly).
 	if reflect.ValueOf(req).IsNil() {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "request cannot be nil")
+		return errors.New("request cannot be nil")
 	}
 
 	inMd, _ := metadata.FromOutgoingContext(ctx)
@@ -84,9 +85,8 @@ func (cc *ChainClient) RunGRPCQuery(ctx context.Context, method string, req inte
 			return abci.ResponseQuery{}, nil, err
 		}
 		if height < 0 {
-			return abci.ResponseQuery{}, nil, sdkerrors.Wrapf(
-				sdkerrors.ErrInvalidRequest,
-				"client.Context.Invoke: height (%d) from %q must be >= 0", height, grpctypes.GRPCBlockHeightHeader)
+			return abci.ResponseQuery{}, nil, errors.New(
+				fmt.Sprintf("client.Context.Invoke: height (%d) from %q must be >= 0", height, grpctypes.GRPCBlockHeightHeader))
 		}
 
 	}
