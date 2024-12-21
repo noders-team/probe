@@ -6,6 +6,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/msgservice"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
+	evmtypes "github.com/evmos/ethermint/x/evm/types"
 )
 
 var ModuleCdc = codec.NewProtoCodec(codectypes.NewInterfaceRegistry())
@@ -13,6 +14,10 @@ var ModuleCdc = codec.NewProtoCodec(codectypes.NewInterfaceRegistry())
 func RegisterInterfaces(registry codectypes.InterfaceRegistry) {
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgPayForBlobs{},
+	)
+
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&evmtypes.MsgEthereumTx{},
 	)
 
 	registry.RegisterInterface(
