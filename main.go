@@ -79,7 +79,7 @@ func main() {
 	options = querier.QueryOptions{Height: checkHeight, Pagination: &pg}
 	query = querier.Query{Client: cl, Options: &options}
 
-	txResponse, err := querier.TxsAtHeightRPC(&query, checkHeight, cl.Codec)
+	txResponse, err := querier.TxsAtHeightRPC(&query, checkHeight, cl.Codec, 0, 100)
 
 	if err != nil {
 		fmt.Println("Error getting transactions")
