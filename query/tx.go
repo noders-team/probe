@@ -21,7 +21,8 @@ func TxsAtHeightRPC(q *Query, height int64, codec client.Codec, page, limit uint
 		Events:  []string{"tx.height=" + fmt.Sprintf("%d", height)},
 		Page:    page,
 		Limit:   limit,
-		OrderBy: orderBy}
+		OrderBy: orderBy,
+	}
 	return TxsRPC(q, req, codec)
 }
 

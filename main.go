@@ -14,7 +14,6 @@ import (
 )
 
 func main() {
-
 	cconfig := &client.ChainClientConfig{
 		Key:            "default",
 		ChainID:        os.Getenv("CHAIN_ID"),
@@ -79,7 +78,7 @@ func main() {
 	options = querier.QueryOptions{Height: checkHeight, Pagination: &pg}
 	query = querier.Query{Client: cl, Options: &options}
 
-	txResponse, err := querier.TxsAtHeightRPC(&query, checkHeight, cl.Codec)
+	txResponse, err := querier.TxsAtHeightRPC(&query, checkHeight, cl.Codec, 0, 100)
 
 	if err != nil {
 		fmt.Println("Error getting transactions")
@@ -117,7 +116,6 @@ func main() {
 
 	if cconfig.ChainID == "osmosis-1" {
 		epochData, err := osmosisQueryTypes.EpochsAtHeightRPC(&query, checkHeight)
-
 		if err != nil {
 			fmt.Println("Error getting epoch results")
 			fmt.Println(err)
@@ -132,7 +130,6 @@ func main() {
 		}
 
 		protorevDevAccountData, err := osmosisQueryTypes.ProtorevDeveloperAccountRPC(&query)
-
 		if err != nil {
 			fmt.Println("Error getting protorev results")
 			fmt.Println(err)
@@ -143,7 +140,6 @@ func main() {
 		fmt.Println("Protorev Developer Account Address: ", protorevDevAccountData.DeveloperAccount)
 
 	}
-
 }
 
 var handlers = map[string]func(cosmosTypes.Msg){
