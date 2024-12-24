@@ -14,10 +14,21 @@ var ModuleCdc = codec.NewProtoCodec(codectypes.NewInterfaceRegistry())
 func RegisterInterfaces(registry codectypes.InterfaceRegistry) {
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgPayForBlobs{},
+		&evmtypes.MsgEthereumTx{},
 	)
 
-	registry.RegisterImplementations((*sdk.Msg)(nil),
-		&evmtypes.MsgEthereumTx{},
+	registry.RegisterImplementations((*sdk.Msg)(nil))
+
+	registry.RegisterInterface(
+		"ethermint.evm.v1.MsgEthereumTx",
+		(*evmtypes.TxData)(nil),
+	)
+
+	registry.RegisterImplementations(
+		(*evmtypes.TxData)(nil),
+		&evmtypes.LegacyTx{},
+		&evmtypes.AccessListTx{},
+		&evmtypes.DynamicFeeTx{},
 	)
 
 	registry.RegisterInterface(

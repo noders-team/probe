@@ -19,25 +19,23 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/staking"
 )
 
-var (
-	// Provides a default set of AppModuleBasics that are included in the ChainClientConfig
-	// This is used to provide a default set of modules that will be used for protobuf registration and in-app decoding of RPC responses
-	DefaultModuleBasics = []module.AppModuleBasic{
-		auth.AppModuleBasic{},
-		authz.AppModuleBasic{},
-		bank.AppModuleBasic{},
-		capability.AppModuleBasic{},
-		gov.AppModuleBasic{},
-		crisis.AppModuleBasic{},
-		distribution.AppModuleBasic{},
-		feegrant.AppModuleBasic{},
-		mint.AppModuleBasic{},
-		params.AppModuleBasic{},
-		slashing.AppModuleBasic{},
-		staking.AppModuleBasic{},
-		vesting.AppModuleBasic{},
-	}
-)
+// Provides a default set of AppModuleBasics that are included in the ChainClientConfig
+// This is used to provide a default set of modules that will be used for protobuf registration and in-app decoding of RPC responses
+var DefaultModuleBasics = []module.AppModuleBasic{
+	auth.AppModuleBasic{},
+	authz.AppModuleBasic{},
+	bank.AppModuleBasic{},
+	capability.AppModuleBasic{},
+	gov.AppModuleBasic{},
+	crisis.AppModuleBasic{},
+	distribution.AppModuleBasic{},
+	feegrant.AppModuleBasic{},
+	mint.AppModuleBasic{},
+	params.AppModuleBasic{},
+	slashing.AppModuleBasic{},
+	staking.AppModuleBasic{},
+	vesting.AppModuleBasic{},
+}
 
 type ChainClientConfig struct {
 	Key            string                  `json:"key" yaml:"key"`
